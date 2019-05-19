@@ -1,3 +1,4 @@
+# flake8: noqa
 from .serializers import ViewSetSerializer
 from .views import (
     ViewSetCreateView, ViewSetDeleteView, ViewSetDetailView, ViewSetIndexView,
