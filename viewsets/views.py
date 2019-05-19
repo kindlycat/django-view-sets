@@ -131,7 +131,7 @@ class ViewSetListView(SerializerMixin, BaseViewSetView, BaseFilterView, ListView
         if self.filterset_class:
             return self.filterset_class
         fields_var = 'autocomplete_filterset_fields' if self.as_json else 'filterset_fields'
-        filterset_fields = getattr(self, fields_var, ()) or ('o',)
+        filterset_fields = getattr(self, fields_var, ())
         return viewset_filterset_factory(model=self.model, fields=filterset_fields)
 
     def get_search_kwargs(self):
