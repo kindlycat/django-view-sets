@@ -48,10 +48,9 @@ class SearchFilter(django_filters.CharFilter):
 
 
 class ViewSetFilterSet(django_filters.FilterSet):
-    o = django_filters.OrderingFilter(widget=forms.HiddenInput)
-
     def __init__(self, data=None, queryset=None, *, request=None, prefix=None,
                  search_kwargs=None, order_by=None):
+        self.base_filters['o'] = django_filters.OrderingFilter(widget=forms.HiddenInput)
         sp = search_kwargs.pop('parameter', 'q')
         has_search = search_kwargs and search_kwargs.get('fields')
         if has_search:
