@@ -1,0 +1,71 @@
+{% extends 'viewsets/detail.html' %}
+
+{% block breadcrumbs_items %}
+  {% if viewset.view_index %}
+    <li class="breadcrumb-item"><a href="{{ viewset.get_index_url() }}">{{ _('Home') }}</a></li>
+  {% endif %}
+  <li class="breadcrumb-item"><a
+      href="{{ viewset_url(model_viewset, 'list') }}">{{ opts.verbose_name_plural|capfirst }}</a></li>
+  <li class="breadcrumb-item text-muted">
+    {%- if has_detail_permission -%}
+      <a href="{{ viewset_url(model_viewset, 'detail', pk=object.pk) }}">
+    {%- endif -%}
+    {{ object|capfirst }}
+    {%- if has_detail_permission -%}
+      </a>
+    {%- endif -%}
+  </li>
+  <li class="breadcrumb-item active">Preview</li>
+{% endblock %}
+
+{% block extrahead %}
+  <style>
+    .stroke {
+      text-shadow: -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1 class="d-inline-block">{{ object.title }}</h1>
+  {% if object.category %}<span class="badge badge-primary align-top">{{ object.category }}</span>{% endif %}
+
+  <p class="text-muted">{{ object.publish_date|date('d.m.Y') }}</p>
+
+  {% if news.tags.exists() %}
+    <div>
+      <i class="fa fa-tags"></i>
+      {% for tag in news.tags.all() %}<a href="#">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+    </div>
+  {% endif %}
+
+  <div>{{ object.body|safe }}</div>
+
+  {% if object.images.exists() %}
+    <div id="carouselImages" class="carousel slide bg-dark" style="height: 600px" data-ride="carousel">
+      <div class="carousel-inner h-100">
+        {% for im in object.images.all() %}
+          <div class="carousel-item h-100 {% if loop.first %}active{% endif %}">
+            <img class="d-block img-fluid h-100 mx-auto" src="{{ im.file_obj.url }}" alt="">
+            {% if im.description %}
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="stroke">{{ im.description }}</h5>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselImages" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselImages" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}

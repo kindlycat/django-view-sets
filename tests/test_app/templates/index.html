@@ -1,0 +1,13 @@
+{% extends 'viewsets/base.html' %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block body_title %}Login{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {% include 'viewsets/includes/_form.html' %}
+    <input type="submit" class="btn btn-primary" value="Login">
+  </form>
+{% endblock %}

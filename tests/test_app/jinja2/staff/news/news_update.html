@@ -1,0 +1,8 @@
+{% extends 'viewsets/update.html' %}
+
+{% block title_buttons %}
+  {{ super() }}
+    <a class="btn btn-secondary float-right" href="{{ viewset_url(model_viewset, 'preview', pk=object.pk) }}">
+      <i class="fa fa-newspaper"></i> Preview
+    </a>
+{% endblock %}

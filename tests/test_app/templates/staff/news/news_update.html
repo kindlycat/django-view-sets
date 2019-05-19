@@ -1,0 +1,9 @@
+{% extends 'viewsets/update.html' %}
+{% load viewset_tags %}
+
+{% block title_buttons %}
+  {{ block.super }}
+    <a class="btn btn-secondary float-right" href="{% viewset_url model_viewset 'preview' pk=object.pk %}">
+      <i class="fa fa-newspaper"></i> Preview
+    </a>
+{% endblock %}
