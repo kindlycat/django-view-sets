@@ -79,7 +79,7 @@ def add_filterset_formfield_callback(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         filterset = func(self, *args, **kwargs)
-        for name, field in filterset._form.fields.items():
+        for name, field in filterset.form.fields.items():
             if name in self.model_viewset.filterset_autocomplete \
                     or name in self.model_viewset.filterset_lookups:
                 field.widget = self.model_viewset.formfield_callback(
