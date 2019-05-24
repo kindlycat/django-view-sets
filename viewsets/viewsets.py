@@ -93,6 +93,7 @@ class ViewAttrsMixin:
     form_class = Default
     formset_classes = Default
 
+    filterset_class = Default
     filterset_fields = Default
     filterset_order_by = Default
     autocomplete_filterset_fields = Default
