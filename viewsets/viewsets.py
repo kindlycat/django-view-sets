@@ -59,7 +59,7 @@ class ViewSet:
         if self.view_index:
             urls += [path('', self.view_index.as_view(viewset=self), name='index')]
         for model, viewset in self.registered:
-            urls += [path('{}/'.format(viewset.model_namespace), include(viewset.urls))]
+            urls += [path('{}/'.format(viewset.url_prefix), include(viewset.urls))]
         return urls
 
     def get_index_url(self):
@@ -131,12 +131,13 @@ class ModelViewSet(ViewAttrsMixin):
     filterset_lookups = ()
     filterset_autocomplete = ()
 
-    def __init__(self, model, viewset=None, model_namespace=None, **kwargs):
+    def __init__(self, model, viewset=None, model_namespace=None, url_prefix=None, **kwargs):
         self.model = model
         self.viewset = viewset
         self.viewset_prefix = viewset and viewset.prefix or ''
         self.opts = model._meta
-        self.model_namespace = model_namespace or self.opts.model_name
+        self.model_namespace = model_namespace or '{}_{}'.format(self.opts.app_label, self.opts.model_name)
+        self.url_prefix = url_prefix or '{}/{}'.format(self.opts.app_label, self.opts.model_name)
         self.available_views = self.available_views or ['list', 'create', 'update', 'detail', 'delete']
 
         for k, v in kwargs.items():
