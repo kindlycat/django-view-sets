@@ -92,6 +92,7 @@ class ViewAttrsMixin:
     queryset = Default
     form_class = Default
     formset_classes = Default
+    template_name = Default
 
     filterset_class = Default
     filterset_fields = Default
@@ -180,7 +181,8 @@ class ModelViewSet(ViewAttrsMixin):
         }
         for attr in (x for x in dir(ViewAttrsMixin) if not x.startswith('_')):
             kwargs.setdefault(attr, getattr(self, attr))
-            if attr in ['fields', 'fields_names', 'serializer', 'queryset', 'form_class', 'formset_classes']:
+            if attr in ['fields', 'fields_names', 'serializer', 'queryset', 'form_class', 'formset_classes',
+                        'template_name']:
                 prefixed = '{}_{}'.format(action, attr)
                 if hasattr(self, prefixed):
                     kwargs[attr] = getattr(self, prefixed)

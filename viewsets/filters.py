@@ -52,7 +52,7 @@ class ViewSetFilterSet(django_filters.FilterSet):
                  search_kwargs=None, order_by=None):
         self.base_filters['o'] = django_filters.OrderingFilter(widget=forms.HiddenInput)
         sp = search_kwargs.pop('parameter', 'q')
-        has_search = search_kwargs and search_kwargs.get('fields')
+        has_search = bool(search_kwargs and search_kwargs.get('fields'))
         if has_search:
             self.base_filters[sp] = SearchFilter(**search_kwargs)
         super().__init__(data, queryset, request=request, prefix=prefix)

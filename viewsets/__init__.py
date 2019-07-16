@@ -7,5 +7,5 @@ from .views import (
 from .viewsets import ModelViewSet, ViewSet
 
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 default_app_config = 'viewsets.apps.ViewsetsConfig'
