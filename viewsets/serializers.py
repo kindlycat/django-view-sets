@@ -159,26 +159,28 @@ class ViewSetSerializer(BaseSerializer):
             return None
         return self.model_viewset.viewset.get_registered(obj.__class__)
 
-    def get_obj_link(self, obj, text=None):
+    def get_obj_link(self, obj, text=None, url=None):
         text = text or str(obj)
         if not isinstance(text, SafeText):
             text = escape(text)
 
-        model_viewset = self.get_model_viewset(obj)
-        if not model_viewset:
-            return text
-
-        url = model_viewset.get_obj_url(self.request, obj)
-        if not url and not self.is_popup:
-            return text
-
         data = ''
         blank = (obj.__class__ is not self.model)
-        if self.request.GET.get('_popup'):
-            to_field = self.request.GET.get('_to_field') or 'pk'
-            data = 'data-popup-value="{}" data-popup-repr="{}" data-popup-url="{}"'.format(
-                getattr(obj, to_field, ''), escape(text), model_viewset.get_obj_url(self.request, obj)
-            )
+
+        if url is None:
+            model_viewset = self.get_model_viewset(obj)
+            if not model_viewset:
+                return text
+
+            url = model_viewset.get_obj_url(self.request, obj)
+            if not url and not self.is_popup:
+                return text
+
+            if self.request.GET.get('_popup') and model_viewset:
+                to_field = self.request.GET.get('_to_field') or 'pk'
+                data = 'data-popup-value="{}" data-popup-repr="{}" data-popup-url="{}"'.format(
+                    getattr(obj, to_field, ''), escape(text), model_viewset.get_obj_url(self.request, obj)
+                )
 
         return mark_safe(
             '<a href="{href}" {target} {data}>{text}</a>'.format(
