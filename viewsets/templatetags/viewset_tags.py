@@ -116,20 +116,20 @@ def add_error_css_class(field, css_class):
 if jinja_library:
     @jinja_library.global_function(name='show_paginator')
     @jinja_library.render_with('viewsets/includes/_paginator.html')
-    @jinja2.contextfunction
+    @jinja2.pass_context
     def _show_paginator(context):
         return show_paginator(dict(context))
 
     @jinja_library.global_function(name='sort_link')
     @jinja_library.render_with('viewsets/includes/_sort_link.html')
-    @jinja2.contextfunction
+    @jinja2.pass_context
     def _sort_link(context, field_name, title, sorting):
         return sort_link(dict(context), field_name, title, sorting)
 
     jinja_library.global_function(viewset_url)
     jinja_library.global_function(object_url)
-    jinja_library.global_function(jinja2.contextfunction(url_replace))
-    jinja_library.global_function(jinja2.contextfunction(preserve_params))
+    jinja_library.global_function(jinja2.pass_context(url_replace))
+    jinja_library.global_function(jinja2.pass_context(preserve_params))
     jinja_library.filter(order_formset_forms)
     jinja_library.filter(unordered_list)
     jinja_library.filter(fn=add_css_class, name='add_css_class')
