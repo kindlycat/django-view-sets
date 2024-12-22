@@ -21,14 +21,12 @@ setup(
     url='https://github.com/kindlycat/django-view-sets/',
     packages=find_packages(exclude=('manage', 'tests', 'tests.*')),
     include_package_data=True,
-    install_requires=['Django>=2.0', 'django-filter>=2.1.0'],
+    install_requires=['Django>=4.0', 'django-filter>=2.1.0'],
     classifiers=[
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-        'Framework :: Django :: 2.0',
-        'Framework :: Django :: 2.1',
-        'Framework :: Django :: 2.2',
+        'Framework :: Django :: 4.0',
         'License :: OSI Approved :: BSD License',
     ],
 )

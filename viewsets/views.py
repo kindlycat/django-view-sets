@@ -7,10 +7,10 @@ from django.db.transaction import atomic
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import NoReverseMatch
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.html import format_html
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 )
@@ -225,7 +225,7 @@ class ViewSetDeleteView(BaseViewSetView, SuccessMessageMixin, DeleteView):
 
         def format_callback(obj):
             opts = obj._meta
-            no_edit_link = '{}: {}'.format(capfirst(opts.verbose_name), force_text(obj))
+            no_edit_link = '{}: {}'.format(capfirst(opts.verbose_name), force_str(obj))
             if not self.viewset:
                 return no_edit_link
 
@@ -256,7 +256,7 @@ class ViewSetDeleteView(BaseViewSetView, SuccessMessageMixin, DeleteView):
             'model_count': model_count,
             'perms_needed': perms_needed,
             'protected': protected,
-            'object_name': force_text(self.opts.verbose_name)
+            'object_name': force_str(self.opts.verbose_name)
         })
         return context
 
